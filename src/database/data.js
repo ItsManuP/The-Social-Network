@@ -1,5 +1,7 @@
 const mongoose = require('./connection.js');
 
+
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -17,13 +19,7 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-    },
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-    default: 1
-  },
+    }
 });
 
 const postSchema = new mongoose.Schema({
@@ -52,12 +48,24 @@ const postSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', userSchema);
-const Post = mongoose.model('Post', postSchema);
+let User;
+let Post;
 
+if (mongoose.models.User) {
+  User = mongoose.model('User');
+} else {
+  User = mongoose.model('User', userSchema);
+}
 
+if (mongoose.models.Post) {
+  Post = mongoose.model('Post');
+} else {
+  Post = mongoose.model('Post', postSchema);
+}
 
 module.exports = {
   User,
   Post
 };
+
+
