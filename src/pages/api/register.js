@@ -3,7 +3,7 @@ import { User } from '../../database/data';
 
 
 export default async function handler(req, res) {
-  const { username, password, email } = req.body;
+  const { username, password, email, salt } = req.body;
 
   try {
     // Verifica se l'utente esiste già
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     }
       
     // Crea un nuovo utente
-    const newUser = await addUserToDatabase(username, password, email);
+    const newUser = await addUserToDatabase(username, password, email, salt);
 
     res.status(201).json({ success: true, data: newUser });
   } catch (error) {
