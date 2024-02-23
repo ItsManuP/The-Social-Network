@@ -6,7 +6,8 @@ async function addUserToDatabase(username,password,email) {
         const newUser = new User({
             username,
             email,
-            password
+            password,
+            salt
         });
 
         // Save the user to the database
