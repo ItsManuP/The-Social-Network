@@ -1,7 +1,6 @@
 const mongoose = require('./connection.js');
 
 
-
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -16,10 +15,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  salt: {
+    type: binData,
+    required: true,
+    length: 16
+  },
   createdAt: {
     type: Date,
     default: Date.now
-    }
+    },
 });
 
 const postSchema = new mongoose.Schema({
