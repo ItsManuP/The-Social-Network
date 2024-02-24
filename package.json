@@ -9,9 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "argon2": "^0.40.1",
+    "bcryptjs": "^2.4.3",
     "dompurify": "^3.0.9",
-    "fs": "^0.0.1-security",
     "mongoose": "^8.2.0",
     "next": "^14.1.0",
     "react": "^18",
