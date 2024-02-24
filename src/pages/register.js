@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import DOMPurify from 'dompurify';
-//both argon2 and bcrypt compilation error related to "fs" module, so i must find a way to apply an hashing algorithm to the password withouth encountering this error
-// i'm gonna think how to solve this problem
-// For now i forced the cache to be deleted, also deleted .next folder, reinstalled fs but doesn't work
-const argon2 = require('argon2');
+
+var bcrypt = require('bcryptjs');
+
+
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -23,15 +23,14 @@ export default function Register() {
 
     const sanitizedUsername = sanitizeInput(username);
     const sanitizedPassword = sanitizeInput(password);
+    const salt = bcrypt.genSaltSync(10);  
+    const hashedpassword = bcrypt.hashSync(sanitizedPassword, salt);
     const sanitizedEmail = sanitizeInput(email);
-
-    const salt = await argon2.generateSalt();
-    const hashedPassword = await argon2.hash(sanitizedPassword, salt);
 
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: sanitizedUsername, password: hashedPassword, email: sanitizedEmail, salt: salt}),
+      body: JSON.stringify({ username: sanitizedUsername, password: hashedpassword, email: sanitizedEmail, salt: salt}),
     });
 
     const data = await response.json();

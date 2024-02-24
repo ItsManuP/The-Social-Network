@@ -1,6 +1,6 @@
 const { User } = require('./data');
 
-async function addUserToDatabase(username,password,email) {
+async function addUserToDatabase(username,password,email,salt) {
     try {
         // Create a new user instance
         const newUser = new User({

@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  salt: {
-    type: binData,
+ salt: {
+    type: mongoose.SchemaTypes.Buffer,
     required: true,
-    length: 16
+    length: 16,
   },
   createdAt: {
     type: Date,
