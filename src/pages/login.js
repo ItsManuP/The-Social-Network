@@ -1,9 +1,21 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+const express = require('express');
+const session = require('express-session');
+
+
+const app = express()
+
+app.use(session({
+  secret: 's3cr3t4-k3y-f0r-my-4pplic4t10n', // Hardcoded because is a test, for production i will put this inside an .env file ;)
+  resave: false,
+  saveUninitialized: true,
+}));
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const router = useRouter();
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -16,15 +28,17 @@ export default function Login() {
 
     const data = await response.json();
     if (response.status === 200) {
-      //login avvenuto correttamente
+      
+      router.push('/')
       console.log(data.status);
-      console.log("Loggato correttamente");
+      
     } else {
       //login non avvenuto correttamente
       console.log(data.status);
-      console.log("Credenziali non corrette");
     }
   };
+
+  
 
   return (
     <form onSubmit={handleSubmit}>
