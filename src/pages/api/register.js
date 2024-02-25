@@ -18,6 +18,6 @@ export default async function handler(req, res) {
 
     res.status(201).json({ success: true, data: newUser });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Errore zio" });
+    res.status(500).json({ success: false, message: "La registrazione non è andata a buon fine" });
   }
 }
