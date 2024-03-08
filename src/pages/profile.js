@@ -1,7 +1,6 @@
 import React from "react"
 import { useRouter } from "next/router";
-const express = require('express');
-const session = require('express-session');
+
 
 function profile() {
     const router = useRouter();
