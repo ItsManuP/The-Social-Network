@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
  salt: {
-    type: mongoose.SchemaTypes.Buffer,
+    type: Buffer,
     required: true,
     length: 16,
   },
@@ -52,8 +52,31 @@ const postSchema = new mongoose.Schema({
   }
 });
 
+const tokenSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true,
+    ref: 'User',
+  }, 
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+  expiresAt: {
+    type: Date,
+    default: () => Date.now() + 3600000, // 1 hour in milliseconds
+  },
+});
+
+
+
 let User;
 let Post;
+let Token;
 
 if (mongoose.models.User) {
   User = mongoose.model('User');
@@ -67,9 +90,16 @@ if (mongoose.models.Post) {
   Post = mongoose.model('Post', postSchema);
 }
 
+if (mongoose.models.Token) {
+  Token = mongoose.model('Token');
+} else {  
+  Token = mongoose.model('Token', tokenSchema);
+}
+
 module.exports = {
   User,
-  Post
+  Post,
+  Token
 };
 
 

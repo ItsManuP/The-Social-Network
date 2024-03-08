@@ -1,4 +1,4 @@
-import {addUserToDatabase } from '../../database/createusers';
+import {addUserToDatabase } from '../../database/query';
 import { User } from '../../database/data';
 
 
