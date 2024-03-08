@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -26,16 +26,21 @@ export default function Login() {
     });
 
     const data = await response.json();
+    var token = String(data.token);
 
     if (response.status === 200) {
-      setCookie('authToken', { token: "valido" }, {
+      setCookie('authToken', token, {
         maxAge: 3600,
-        sameSite: 'Lax', // Add the SameSite attribute
+        sameSite: 'Lax',
       });
 
-
+      setCookie('user', username, {
+        maxAge: 3600,
+        sameSite: 'Lax', 
+      });
+  
       router.push('/')
-
+    
     } else {
       console.log('Login failed:', data.status);
     }
